@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.educons.njuz.countries.CountryListActivity;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,7 +89,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_sources) {
 
         } else if (id == R.id.nav_countries) {
-
+            Intent intent = new Intent(this, CountryListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

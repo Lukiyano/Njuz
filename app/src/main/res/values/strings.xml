@@ -9,4 +9,6 @@
     <string name="feed">Feed</string>
     <string name="sources">Sources</string>
     <string name="news_by_country">News by Country</string>
+    <string name="title_country_list">Countries</string>
+    <string name="title_country_detail">Country Detail</string>
 </resources>
