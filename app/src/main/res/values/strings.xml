@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Njuz</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Njuz</string>
+    <string name="nav_header_subtitle">by Luka Hajnal</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="feed">Feed</string>
+    <string name="sources">Sources</string>
+    <string name="news_by_country">News by Country</string>
+</resources>
