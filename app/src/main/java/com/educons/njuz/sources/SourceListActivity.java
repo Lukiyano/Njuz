@@ -1,4 +1,4 @@
-package com.educons.njuz.countries;
+package com.educons.njuz.sources;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,20 +21,21 @@ import android.widget.TextView;
 
 import com.educons.njuz.R;
 
-import com.educons.njuz.countries.dummy.DummyContent;
+import com.educons.njuz.countries.CountryListActivity;
+import com.educons.njuz.sources.dummy.DummyContent;
 
 import java.util.List;
 
 /**
- * An activity representing a list of Countries. This activity
+ * An activity representing a list of Sources. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link CountryDetailActivity} representing
+ * lead to a {@link SourceDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class CountryListActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class SourceListActivity extends AppCompatActivity
+    implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -45,7 +46,7 @@ public class CountryListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_country_list);
+        setContentView(R.layout.activity_source_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,7 +70,7 @@ public class CountryListActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (findViewById(R.id.country_detail_container) != null) {
+        if (findViewById(R.id.source_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
@@ -77,7 +78,7 @@ public class CountryListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        View recyclerView = findViewById(R.id.country_list);
+        View recyclerView = findViewById(R.id.source_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
     }
@@ -129,33 +130,33 @@ public class CountryListActivity extends AppCompatActivity
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final CountryListActivity mParentActivity;
-        private final List<DummyContent.Country> mValues;
+        private final SourceListActivity mParentActivity;
+        private final List<DummyContent.Source> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DummyContent.Country item = (DummyContent.Country) view.getTag();
+                DummyContent.Source item = (DummyContent.Source) view.getTag();
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(CountryDetailFragment.ARG_ITEM_ID, item.id);
-                    CountryDetailFragment fragment = new CountryDetailFragment();
+                    arguments.putString(SourceDetailFragment.ARG_ITEM_ID, item.id);
+                    SourceDetailFragment fragment = new SourceDetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.country_detail_container, fragment)
+                            .replace(R.id.source_detail_container, fragment)
                             .commit();
                 } else {
                     Context context = view.getContext();
-                    Intent intent = new Intent(context, CountryDetailActivity.class);
-                    intent.putExtra(CountryDetailFragment.ARG_ITEM_ID, item.id);
+                    Intent intent = new Intent(context, SourceDetailActivity.class);
+                    intent.putExtra(SourceDetailFragment.ARG_ITEM_ID, item.id);
 
                     context.startActivity(intent);
                 }
             }
         };
 
-        SimpleItemRecyclerViewAdapter(CountryListActivity parent,
-                                      List<DummyContent.Country> items,
+        SimpleItemRecyclerViewAdapter(SourceListActivity parent,
+                                      List<DummyContent.Source> items,
                                       boolean twoPane) {
             mValues = items;
             mParentActivity = parent;
@@ -165,13 +166,13 @@ public class CountryListActivity extends AppCompatActivity
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.country_list_content, parent, false);
+                    .inflate(R.layout.source_list_content, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-//            holder.mIdView.setText(mValues.get(position).id);
+            holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).name);
 
             holder.itemView.setTag(mValues.get(position));
@@ -184,12 +185,12 @@ public class CountryListActivity extends AppCompatActivity
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-//            final TextView mIdView;
+            final TextView mIdView;
             final TextView mContentView;
 
             ViewHolder(View view) {
                 super(view);
-//                mIdView = (TextView) view.findViewById(R.id.id_text);
+                mIdView = (TextView) view.findViewById(R.id.id_text);
                 mContentView = (TextView) view.findViewById(R.id.content);
             }
         }

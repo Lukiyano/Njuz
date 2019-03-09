@@ -12,9 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".sources.SourceListActivity"
+            android:label="@string/title_source_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".sources.SourceDetailActivity"
+            android:label="@string/title_source_detail"
+            android:parentActivityName=".sources.SourceListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.educons.njuz.sources.SourceListActivity" />
+        </activity>
+        <activity
             android:name=".countries.CountryListActivity"
             android:label="@string/title_country_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".countries.CountryDetailActivity"
             android:label="@string/title_country_detail"

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".countries.CountryListActivity">
+        tools:context=".sources.SourceListActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include layout="@layout/country_list" />
+            <include layout="@layout/source_list" />
         </FrameLayout>
 
         <android.support.design.widget.FloatingActionButton

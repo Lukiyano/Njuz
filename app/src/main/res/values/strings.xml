@@ -11,4 +11,6 @@
     <string name="news_by_country">News by Country</string>
     <string name="title_country_list">Countries</string>
     <string name="title_country_detail">Country Detail</string>
+    <string name="title_source_list">Sources</string>
+    <string name="title_source_detail">Source Detail</string>
 </resources>

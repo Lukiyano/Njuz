@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.educons.njuz.countries.CountryListActivity;
+import com.educons.njuz.sources.SourceListActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,7 +88,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_sources) {
-
+            Intent intent = new Intent(this, SourceListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_countries) {
             Intent intent = new Intent(this, CountryListActivity.class);
             startActivity(intent);
