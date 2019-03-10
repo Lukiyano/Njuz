@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.educons.njuz.R;
+import com.educons.njuz.sources.dummy.DummyContent;
 
 /**
  * An activity representing a single Source detail screen. This
@@ -83,7 +84,9 @@ public class SourceDetailActivity extends AppCompatActivity {
     }
 
     public void goToUrl(View view) {
-        String url = "https://www.bbc.com/news";
+        String itemId = getIntent().getStringExtra(SourceDetailFragment.ARG_ITEM_ID);
+        DummyContent.Source source = DummyContent.ITEM_MAP.get(itemId);
+        String url = source.url;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);

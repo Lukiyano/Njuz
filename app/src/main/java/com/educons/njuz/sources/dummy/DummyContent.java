@@ -35,11 +35,11 @@ public class DummyContent {
 
     static {
         // Add some sample items.
-        addItem(new Source("1", "BBC", null, "BBC description","http://www.gnu.org","en","us"));
-        addItem(new Source("2", "CNN", null, "dummy description","http://www.gnu.org","en","us"));
-        addItem(new Source("3", "Al Jazeera", null, "dummy description","http://www.gnu.org","en","us"));
-        addItem(new Source("4", "FOX", null, "BBC description dummy description","http://www.gnu.org","en","us"));
-        addItem(new Source("5", "Channel 9", null, "dummy descriptiondummy descriptiondummy descriptiondummy description","http://www.gnu.org","en","us"));
+        addItem(new Source("1", "BBC", null, "BBC description","http://www.bbc.com/news","en","us"));
+        addItem(new Source("2", "CNN", null, "dummy description","http://www.cnn.com","en","us"));
+        addItem(new Source("3", "Al Jazeera", null, "dummy description","http://www.aljazeera.com","en","us"));
+        addItem(new Source("4", "FOX", null, "BBC description dummy description","http://www.foxnews.com","en","us"));
+        addItem(new Source("5", "Yahoo", null, "dummy descriptiondummy descriptiondummy descriptiondummy description","http://www.news.yahoo.com","en","us"));
 
     }
 
