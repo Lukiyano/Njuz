@@ -13,4 +13,6 @@
     <string name="title_country_detail">Country Detail</string>
     <string name="title_source_list">Sources</string>
     <string name="title_source_detail">Source Detail</string>
+    <string name="title_newspreview_list">NewsPreviews</string>
+    <string name="title_newspreview_detail">NewsPreview Detail</string>
 </resources>

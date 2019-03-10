@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.educons.njuz.countries.CountryListActivity;
+import com.educons.njuz.feed.NewsPreviewListActivity;
 import com.educons.njuz.sources.SourceListActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -86,7 +87,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            Intent intent = new Intent(this, NewsPreviewListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_sources) {
             Intent intent = new Intent(this, SourceListActivity.class);
             startActivity(intent);

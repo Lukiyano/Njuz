@@ -12,9 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".feed.NewsPreviewListActivity"
+            android:label="@string/title_newspreview_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".feed.NewsPreviewDetailActivity"
+            android:label="@string/title_newspreview_detail"
+            android:parentActivityName=".feed.NewsPreviewListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.educons.njuz.feed.NewsPreviewListActivity" />
+        </activity>
+        <activity
             android:name=".sources.SourceListActivity"
             android:label="@string/title_source_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".sources.SourceDetailActivity"
             android:label="@string/title_source_detail"
