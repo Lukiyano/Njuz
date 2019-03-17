@@ -53,15 +53,6 @@ public class CountryListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -140,21 +131,11 @@ public class CountryListActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 DummyContent.Country item = (DummyContent.Country) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(CountryDetailFragment.ARG_ITEM_ID, item.id);
-                    CountryDetailFragment fragment = new CountryDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.country_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, CountryDetailActivity.class);
-                    intent.putExtra(CountryDetailFragment.ARG_ITEM_ID, item.id);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, NewsPreviewListActivity.class);
+                intent.putExtra(CountryDetailFragment.ARG_ITEM_ID, item.id);
 
-                    context.startActivity(intent);
-                }
+                context.startActivity(intent);
             }
         };
 

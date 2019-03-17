@@ -4,19 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.educons.njuz.R;
 
+import com.educons.njuz.countries.CountryListActivity;
 import com.educons.njuz.feed.dummy.DummyContent;
+import com.educons.njuz.sources.SourceListActivity;
 
 import java.util.List;
 
@@ -28,7 +34,8 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class NewsPreviewListActivity extends AppCompatActivity {
+public class NewsPreviewListActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener  {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -45,14 +52,14 @@ public class NewsPreviewListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (findViewById(R.id.newspreview_detail_container) != null) {
             // The detail container view will be present only in the
@@ -69,6 +76,49 @@ public class NewsPreviewListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(this, NewsPreviewListActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_sources) {
+            Intent intent = new Intent(this, SourceListActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_countries) {
+            Intent intent = new Intent(this, CountryListActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,"Hello World!!");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public static class SimpleItemRecyclerViewAdapter
