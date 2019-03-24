@@ -11,20 +11,33 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.educons.njuz.R;
 
 import com.educons.njuz.countries.CountryListActivity;
 import com.educons.njuz.feed.dummy.DummyContent;
 import com.educons.njuz.sources.SourceListActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An activity representing a list of NewsPreviews. This activity
@@ -42,6 +55,7 @@ public class NewsPreviewListActivity extends AppCompatActivity
      * device.
      */
     private boolean mTwoPane;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +83,55 @@ public class NewsPreviewListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        View recyclerView = findViewById(R.id.newspreview_list);
+        recyclerView = findViewById(R.id.newspreview_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        setNews();
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<DummyContent.DummyItem> news) {
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, news, mTwoPane));
+    }
+
+    private void setNews() {
+        final List<DummyContent.DummyItem> news = new ArrayList<DummyContent.DummyItem>();
+        final Map<String, DummyContent.DummyItem> news_map = new HashMap<String, DummyContent.DummyItem>();
+
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(
+                        Request.Method.GET,
+                        "https://newsapi.org/v2/everything?q=breaking news&sortBy=popularity&apiKey=b48b7896db1c4975aebdd9cf9125f1a8",
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                JSONArray array = null;
+                                try {
+                                    array = response.getJSONArray("articles");
+
+                                    for (int i = 0 ; i < array.length(); i++) {
+                                        JSONObject obj = array.getJSONObject(i);
+                                        DummyContent.DummyItem article = new DummyContent.DummyItem((i+1)+"", obj.get("title").toString(), obj.get("description").toString(), obj.get("content").toString(), obj.get("url").toString(), obj.get("urlToImage").toString(), obj.get("author").toString(), obj.get("publishedAt").toString());
+                                        news.add(article);
+                                        news_map.put(article.id, article);
+                                        DummyContent.addItem(article);
+                                    }
+                                    DummyContent.ITEMS = news;
+                                    DummyContent.ITEM_MAP = news_map;
+                                    setupRecyclerView(recyclerView, news);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.e("Rest response", response.toString());
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("error", error.getMessage());
+                            }
+                        });
+        requestQueue.add(jsonObjectRequest);
     }
 
 
@@ -167,7 +223,7 @@ public class NewsPreviewListActivity extends AppCompatActivity
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
 //            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).id + " " + mValues.get(position).content);
+            holder.mContentView.setText(mValues.get(position).title);
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);

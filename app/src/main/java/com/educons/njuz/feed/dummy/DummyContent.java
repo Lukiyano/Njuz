@@ -16,14 +16,14 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-    private static final int COUNT = 25;
+    private static int COUNT = 25;
 
     static {
         // Add some sample items.
@@ -32,13 +32,13 @@ public class DummyContent {
         }
     }
 
-    private static void addItem(DummyItem item) {
+    public static void addItem(DummyItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
+        return new DummyItem(String.valueOf(position), "Item Title", "Item " + position, makeDetails(position), "http://www.google.rs", "http://www.google.rs", "Author's Name", "today");
     }
 
     private static String makeDetails(int position) {
@@ -55,13 +55,23 @@ public class DummyContent {
      */
     public static class DummyItem {
         public final String id;
+        public final String title;
         public final String content;
         public final String details;
+        public final String url;
+        public final String urlToImg;
+        public final String author;
+        public final String publishedAt;
 
-        public DummyItem(String id, String content, String details) {
+        public DummyItem(String id, String title, String content, String details, String url, String urlToImg, String author, String publishedAt) {
             this.id = id;
+            this.title = title;
             this.content = content;
             this.details = details;
+            this.url = url;
+            this.urlToImg = urlToImg;
+            this.author = author;
+            this.publishedAt = publishedAt;
         }
 
         @Override

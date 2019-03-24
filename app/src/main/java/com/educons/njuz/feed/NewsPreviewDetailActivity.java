@@ -1,16 +1,33 @@
 package com.educons.njuz.feed;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.educons.njuz.R;
+import com.educons.njuz.feed.dummy.DummyContent;
+import com.educons.njuz.sources.SourceDetailFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * An activity representing a single NewsPreview detail screen. This
@@ -20,6 +37,7 @@ import com.educons.njuz.R;
  */
 public class NewsPreviewDetailActivity extends AppCompatActivity {
 
+    String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +45,41 @@ public class NewsPreviewDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        if (savedInstanceState.getString("item_id")!=null) {
+//            // Load the dummy content specified by the fragment
+//            // arguments. In a real-world scenario, use a Loader
+//            // to load content from a content provider.
+//            DummyContent.DummyItem mItem = DummyContent.ITEM_MAP.get(savedInstanceState.getString("item_id"));
+//            url = mItem.url;
+//        }
+
+
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        JsonObjectRequest jsonObjectRequest =
+//                new JsonObjectRequest(
+//                        Request.Method.GET,
+//                        "https://newsapi.org/v2/everything?q=breaking news&sortBy=popularity&apiKey=b48b7896db1c4975aebdd9cf9125f1a8",
+//                        null,
+//                        new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                JSONObject json = null;
+//                                try {
+//                                    JSONArray jsonArray = response.getJSONArray("articles");
+//                                    json = ((JSONArray) jsonArray).getJSONObject(0);
+//                                    url = json.get("url").toString();
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                Log.e("error", error.getMessage());
+//                            }
+//                        });
+//        requestQueue.add(jsonObjectRequest);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -79,5 +124,15 @@ public class NewsPreviewDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void goToUrl(View view) {
+        Intent intent = getIntent();
+        String itemID = intent.getStringExtra("item_id");
+        DummyContent.DummyItem mItem = DummyContent.ITEM_MAP.get(itemID);
+        url = mItem.url;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }
