@@ -35,7 +35,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +104,12 @@ public class NewsPreviewListActivity extends AppCompatActivity
         if (extras != null) {
             String countryID = extras.get(CountryDetailFragment.ARG_ITEM_ID).toString();
             url = "https://newsapi.org/v2/top-headlines?country="+countryID+"&apiKey=b48b7896db1c4975aebdd9cf9125f1a8";
+        } else {
+            Date today = new Date();
+            String DATE_FORMAT = "yyyy-MM-dd";
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            String formatedDate = sdf.format(today);
+            url += "&from="+formatedDate+"&to="+formatedDate;
         }
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);

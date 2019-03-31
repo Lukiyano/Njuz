@@ -24,32 +24,32 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<Source> ITEMS = new ArrayList<Source>();
+    public static List<Source> ITEMS = new ArrayList<Source>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, Source> ITEM_MAP = new HashMap<String, Source>();
+    public static Map<String, Source> ITEM_MAP = new HashMap<String, Source>();
 
     private static final int COUNT = 25;
 
     static {
         // Add some sample items.
-        addItem(new Source("1", "BBC", null, "BBC description","http://www.bbc.com/news","en","us"));
-        addItem(new Source("2", "CNN", null, "dummy description","http://www.cnn.com","en","us"));
-        addItem(new Source("3", "Al Jazeera", null, "dummy description","http://www.aljazeera.com","en","us"));
-        addItem(new Source("4", "FOX", null, "BBC description dummy description","http://www.foxnews.com","en","us"));
-        addItem(new Source("5", "Yahoo", null, "dummy descriptiondummy descriptiondummy descriptiondummy description","http://www.news.yahoo.com","en","us"));
+        addItem(new Source("1", "BBC", "BBC description","http://www.bbc.com/news","en","us"));
+        addItem(new Source("2", "CNN", "dummy description","http://www.cnn.com","en","us"));
+        addItem(new Source("3", "Al Jazeera","dummy description","http://www.aljazeera.com","en","us"));
+        addItem(new Source("4", "FOX", "BBC description dummy description","http://www.foxnews.com","en","us"));
+        addItem(new Source("5", "Yahoo", "dummy descriptiondummy descriptiondummy descriptiondummy description","http://www.news.yahoo.com","en","us"));
 
     }
 
-    private static void addItem(Source item) {
+    public static void addItem(Source item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
     private static Source createDummyItem(int position) {
-        return new Source(String.valueOf(position), "Source " + position, null, "description",null,"en","us");
+        return new Source(String.valueOf(position), "Source " + position,"description",null,"en","us");
     }
 
     private static String makeDetails(int position) {
@@ -67,16 +67,14 @@ public class DummyContent {
     public static class Source {
         public final String id;
         public final String name;
-        public final Bitmap logo;
         public final String description;
         public final String url;
         public final String language;
         public final String country;
 
-        public Source(String id, String name, Bitmap logo, String description, String url, String language, String country) {
+        public Source(String id, String name, String description, String url, String language, String country) {
             this.id = id;
             this.name = name;
-            this.logo = logo;
             this.description = description;
             this.url = url;
             this.language = language;

@@ -11,19 +11,33 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.educons.njuz.R;
 
 import com.educons.njuz.countries.CountryListActivity;
 import com.educons.njuz.feed.NewsPreviewListActivity;
 import com.educons.njuz.sources.dummy.DummyContent;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An activity representing a list of Sources. This activity
@@ -41,6 +55,8 @@ public class SourceListActivity extends AppCompatActivity
      * device.
      */
     private boolean mTwoPane;
+    final String URL = "https://newsapi.org/v2/sources?apiKey=b48b7896db1c4975aebdd9cf9125f1a8";
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +84,10 @@ public class SourceListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        View recyclerView = findViewById(R.id.source_list);
+        recyclerView = findViewById(R.id.source_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+//        setupRecyclerView((RecyclerView) recyclerView);
+        setSources();
     }
 
     @Override
@@ -81,6 +98,52 @@ public class SourceListActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<DummyContent.Source> sources) {
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, sources, mTwoPane));
+    }
+
+    private void setSources() {
+        final List<DummyContent.Source> sources = new ArrayList<DummyContent.Source>();
+        final Map<String, DummyContent.Source> sources_map = new HashMap<String, DummyContent.Source>();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(
+                        Request.Method.GET,
+                        URL,
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                JSONArray array = null;
+                                try {
+                                    array = response.getJSONArray("sources");
+
+                                    for (int i = 0 ; i < array.length(); i++) {
+                                        JSONObject obj = array.getJSONObject(i);
+                                        DummyContent.Source source = new DummyContent.Source((i+1)+"", obj.get("name").toString(), obj.get("description").toString(), obj.get("url").toString(), obj.get("language").toString(), obj.get("country").toString());
+                                        sources.add(source);
+                                        sources_map.put(source.id, source);
+                                        DummyContent.addItem(source);
+                                    }
+                                    DummyContent.ITEMS = sources;
+                                    DummyContent.ITEM_MAP = sources_map;
+                                    setupRecyclerView(recyclerView, sources);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.e("Rest response", response.toString());
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("error", error.getMessage());
+                            }
+                        });
+        requestQueue.add(jsonObjectRequest);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -103,10 +166,6 @@ public class SourceListActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
     }
 
     public static class SimpleItemRecyclerViewAdapter
