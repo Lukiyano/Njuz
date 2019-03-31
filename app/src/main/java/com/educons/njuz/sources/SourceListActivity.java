@@ -98,16 +98,6 @@ public class SourceListActivity extends AppCompatActivity
         } else if (id == R.id.nav_countries) {
             Intent intent = new Intent(this, CountryListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT,"Hello World!!");
-            sendIntent.setType("text/plain");
-            startActivity(sendIntent);
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

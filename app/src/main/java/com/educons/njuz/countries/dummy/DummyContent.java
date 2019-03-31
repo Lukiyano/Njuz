@@ -29,12 +29,14 @@ public class DummyContent {
 
     static {
         // Add some sample items.
-        addItem(new Country("1", "Kina", null));
-        addItem(new Country("2", "Japan", null));
-        addItem(new Country("3", "Australija", null));
-        addItem(new Country("4", "Srbija", null));
-        addItem(new Country("5", "Velika Britanija", null));
-        addItem(new Country("6", "Mala Britanija", null));
+        addItem(new Country("us", "United States", null));
+        addItem(new Country("gb", "Great Britain", null));
+        addItem(new Country("rs", "Serbia", null));
+        addItem(new Country("au", "Australia", null));
+        addItem(new Country("ru", "Russia", null));
+        addItem(new Country("ch", "Switzerland", null));
+        addItem(new Country("fr", "France", null));
+        addItem(new Country("de", "Germany", null));
     }
 
     private static void addItem(Country item) {

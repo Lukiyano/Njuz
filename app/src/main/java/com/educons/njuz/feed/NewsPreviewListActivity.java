@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.educons.njuz.R;
 
+import com.educons.njuz.countries.CountryDetailFragment;
 import com.educons.njuz.countries.CountryListActivity;
 import com.educons.njuz.feed.dummy.DummyContent;
 import com.educons.njuz.sources.SourceListActivity;
@@ -96,11 +97,18 @@ public class NewsPreviewListActivity extends AppCompatActivity
         final List<DummyContent.DummyItem> news = new ArrayList<DummyContent.DummyItem>();
         final Map<String, DummyContent.DummyItem> news_map = new HashMap<String, DummyContent.DummyItem>();
 
-                RequestQueue requestQueue = Volley.newRequestQueue(this);
+        Bundle extras = getIntent().getExtras();
+        String url = "https://newsapi.org/v2/everything?q=breaking news&sortBy=popularity&apiKey=b48b7896db1c4975aebdd9cf9125f1a8";
+        if (extras != null) {
+            String countryID = extras.get(CountryDetailFragment.ARG_ITEM_ID).toString();
+            url = "https://newsapi.org/v2/top-headlines?country="+countryID+"&apiKey=b48b7896db1c4975aebdd9cf9125f1a8";
+        }
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(
                         Request.Method.GET,
-                        "https://newsapi.org/v2/everything?q=breaking news&sortBy=popularity&apiKey=b48b7896db1c4975aebdd9cf9125f1a8",
+                        url,
                         null,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -160,16 +168,6 @@ public class NewsPreviewListActivity extends AppCompatActivity
         } else if (id == R.id.nav_countries) {
             Intent intent = new Intent(this, CountryListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT,"Hello World!!");
-            sendIntent.setType("text/plain");
-            startActivity(sendIntent);
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
