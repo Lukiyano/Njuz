@@ -45,42 +45,6 @@ public class NewsPreviewDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-//        if (savedInstanceState.getString("item_id")!=null) {
-//            // Load the dummy content specified by the fragment
-//            // arguments. In a real-world scenario, use a Loader
-//            // to load content from a content provider.
-//            DummyContent.DummyItem mItem = DummyContent.ITEM_MAP.get(savedInstanceState.getString("item_id"));
-//            url = mItem.url;
-//        }
-
-
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        JsonObjectRequest jsonObjectRequest =
-//                new JsonObjectRequest(
-//                        Request.Method.GET,
-//                        "https://newsapi.org/v2/everything?q=breaking news&sortBy=popularity&apiKey=b48b7896db1c4975aebdd9cf9125f1a8",
-//                        null,
-//                        new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                JSONObject json = null;
-//                                try {
-//                                    JSONArray jsonArray = response.getJSONArray("articles");
-//                                    json = ((JSONArray) jsonArray).getJSONObject(0);
-//                                    url = json.get("url").toString();
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        },
-//                        new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Log.e("error", error.getMessage());
-//                            }
-//                        });
-//        requestQueue.add(jsonObjectRequest);
-
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

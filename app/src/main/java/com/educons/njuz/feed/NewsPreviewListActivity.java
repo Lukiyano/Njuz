@@ -2,6 +2,7 @@ package com.educons.njuz.feed;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -95,6 +97,7 @@ public class NewsPreviewListActivity extends AppCompatActivity
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, news, mTwoPane));
     }
 
+    //Fills Recycler View, depending on whether it's Top News or Filtered By Country
     private void setNews() {
         final List<DummyContent.DummyItem> news = new ArrayList<DummyContent.DummyItem>();
         final Map<String, DummyContent.DummyItem> news_map = new HashMap<String, DummyContent.DummyItem>();

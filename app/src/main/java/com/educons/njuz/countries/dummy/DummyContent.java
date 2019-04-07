@@ -44,19 +44,6 @@ public class DummyContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static Country createDummyItem(int position) {
-        return new Country(String.valueOf(position), "Item " + position, null);
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
     /**
      * A dummy item representing a piece of content.
      */

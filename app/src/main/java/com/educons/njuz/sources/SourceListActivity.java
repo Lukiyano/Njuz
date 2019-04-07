@@ -86,7 +86,6 @@ public class SourceListActivity extends AppCompatActivity
 
         recyclerView = findViewById(R.id.source_list);
         assert recyclerView != null;
-//        setupRecyclerView((RecyclerView) recyclerView);
         setSources();
     }
 
